@@ -5,15 +5,15 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "dev": "npm run cross-env NODE_ENV=development nodemon ./src/main.js",
-    "start": "npm run cross-env NODE_ENV=production node ./src/main.js",
-    "cross-env": "cross-env"
+    "dev": "cross-env NODE_ENV=development nodemon ./src/main.js",
+    "start": "cross-env NODE_ENV=production node ./src/main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "cross-env": "^7.0.3"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
@@ -21,7 +21,6 @@
     "config": "^3.3.9",
     "fluent-ffmpeg": "^2.1.2",
     "openai": "^4.15.3",
-    "telegraf": "^4.15.0",
-    "cross-env": "^7.0.3"
+    "telegraf": "^4.15.0"
   }
 }
