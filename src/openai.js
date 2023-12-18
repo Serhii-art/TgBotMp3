@@ -8,9 +8,10 @@ class OpenIA {
     USER: "user",
     SYSTEM: "system",
   };
+
   constructor(apiKey) {
     this.openai = new OpenAI({
-      apiKey, // Используем переданный API-ключ
+      apiKey, // Use the passed API key
     });
   }
 
@@ -22,7 +23,7 @@ class OpenIA {
       });
       return response.choices[0].message;
     } catch (e) {
-      console.log("Error while gpt Chat: ");
+      console.log("Error while gpt Chat: ", e.message);
     }
   }
 
@@ -30,17 +31,81 @@ class OpenIA {
     try {
       const response = await this.openai.audio.transcriptions.create({
         model: "whisper-1",
-        file: createReadStream(filepath), // Передаем поток файла, созданный из пути к файлу
+        file: createReadStream(filepath),
       });
       return response.text;
-      //   return response.data.text;
     } catch (e) {
       console.log("Error while transcriptions: ", e.message);
     }
   }
-}
 
-// export const openai = new OpenIA(config.get("OPENAI_KEY"));
+  async dallEGeneration(
+    prompt = "a white siamese cat",
+    size = "1024x1024",
+    quality = "standard",
+    n = 1
+  ) {
+    try {
+      console.log("Before DALL-E request");
+      const response = await this.openai.images.generate({
+        model: "dall-e-3",
+        prompt,
+        size,
+        quality,
+        n,
+      });
+      console.log("After DALL-E request:", response.data);
+
+      // Check if the response has the expected structure
+      if (response.data && response.data.length > 0 && response.data[0].url) {
+        const imageUrl = response.data[0].url;
+        console.log("URL изображения DALL-E:", imageUrl);
+        return imageUrl;
+      } else {
+        console.log("Invalid response structure from DALL-E");
+        throw new Error("Invalid response structure from DALL-E");
+      }
+    } catch (e) {
+      console.log("Error while generating image with DALL-E: ", e.message);
+      throw e;
+    }
+  }
+
+  async dallEGenerationFromImage(
+    imageBuffer,
+    size = "1024x1024",
+    quality = "standard",
+    n = 1
+  ) {
+    try {
+      console.log("Before DALL-E request from image");
+      const response = await this.openai.images.generate({
+        model: "dall-e-3",
+        image: imageBuffer,
+        size,
+        quality,
+        n,
+      });
+      console.log("After DALL-E request from image:", response.data);
+
+      // Check if the response has the expected structure
+      if (response.data && response.data.length > 0 && response.data[0].url) {
+        const imageUrl = response.data[0].url;
+        console.log("URL изображения DALL-E:", imageUrl);
+        return imageUrl;
+      } else {
+        console.log("Invalid response structure from DALL-E");
+        throw new Error("Invalid response structure from DALL-E");
+      }
+    } catch (e) {
+      console.log(
+        "Error while generating image with DALL-E from image: ",
+        e.message
+      );
+      throw e;
+    }
+  }
+}
 
 export const openai = new OpenIA(
   process.env.OPENAI_API_KEY || config.get("OPENAI_KEY")
