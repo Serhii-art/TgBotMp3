@@ -1,9 +1,9 @@
 import { Telegraf, session } from "telegraf";
-import { message } from "telegraf/filters";
 import { code } from "telegraf/format";
 import config from "config";
 import { ogg } from "./ogg.js";
 import { openai } from "./openai.js";
+import { Markup } from "telegraf";
 
 const INITIAL_SESSION = {
   messages: [],
@@ -26,8 +26,7 @@ bot.command("start", async (ctx) => {
   );
 });
 
-import { Markup } from "telegraf";
-
+// "/dalle" command handler
 bot.command("dalle", async (ctx) => {
   ctx.session = ctx.session || INITIAL_SESSION;
 
@@ -37,16 +36,15 @@ bot.command("dalle", async (ctx) => {
       Markup.keyboard([["Отмена"]])
     );
 
-    // Установка состояния "ожидания ответа"
+    // Set the "awaitingDescription" state
     ctx.session.awaitingDescription = true;
   } catch (e) {
-    console.log("Ошибка при обработке команды DALL-E:", e.message);
-    await ctx.reply(
-      "Произошла ошибка при использовании DALL-E. Попробуйте позже."
-    );
+    console.log("Error handling the /dalle command:", e.message);
+    await ctx.reply("An error occurred. Please try again later.");
   }
 });
 
+// Text message handler for DALL-E prompt processing
 bot.on("text", async (ctx) => {
   ctx.session = ctx.session || INITIAL_SESSION;
 
@@ -58,16 +56,17 @@ bot.on("text", async (ctx) => {
       ctx.reply("Генерация изображения DALL-E отменена.");
       ctx.session.awaitingDescription = false;
     } else {
-      console.log("Ответ пользователя для DALL-E:", userDescription);
+      console.log("User input for DALL-E:", userDescription);
 
       try {
+        // Use the user's text as a prompt for DALL-E image generation
         const imageUrl = await openai.dallEGeneration(userDescription);
         await ctx.reply(
           `Your prompt "${userDescription}" expect, generating an image.`
         );
         console.log("URL изображения DALL-E:", imageUrl);
 
-        // Send the image in response to the command
+        // Send the generated image in response to the command
         await ctx.replyWithPhoto({ url: imageUrl });
 
         // Reset the "awaitingDescription" state
@@ -75,14 +74,35 @@ bot.on("text", async (ctx) => {
       } catch (e) {
         console.log("Error while using DALL-E:", e.message);
         await ctx.reply(
-          "Произошла ошибка при использовании DALL-E. Попробуйте позже."
+          "An error occurred while using DALL-E. Please try again later."
         );
       }
+    }
+  } else {
+    // Handle regular text messages not part of DALL-E prompt processing
+    try {
+      await ctx.reply(code("Сообщение принял, жду ответа от сервера..."));
+
+      ctx.session.messages.push({
+        role: openai.roles.USER,
+        content: ctx.message.text,
+      });
+
+      const response = await openai.chat(ctx.session.messages);
+
+      ctx.session.messages.push({
+        role: openai.roles.ASSISTANT,
+        content: response.content,
+      });
+
+      await ctx.reply(response.content);
+    } catch (e) {
+      console.log("Error while processing text message:", e.message);
     }
   }
 });
 
-bot.on(message("voice"), async (ctx) => {
+bot.on("voice", async (ctx) => {
   ctx.session ??= INITIAL_SESSION;
   try {
     await ctx.reply(code("Сообщение принял, жду ответа от сервера..."));
@@ -94,29 +114,6 @@ bot.on(message("voice"), async (ctx) => {
     const text = await openai.transcription(mp3Path);
     await ctx.reply(code(`Ваш запрос: ${text}`));
     ctx.session.messages.push({ role: openai.roles.USER, content: text });
-
-    const response = await openai.chat(ctx.session.messages);
-
-    ctx.session.messages.push({
-      role: openai.roles.ASSISTANT,
-      content: response.content,
-    });
-
-    await ctx.reply(response.content);
-  } catch (e) {
-    console.log("Error while voice message:", e.message);
-  }
-});
-
-bot.on(message("text"), async (ctx) => {
-  ctx.session ??= INITIAL_SESSION;
-  try {
-    await ctx.reply(code("Сообщение принял, жду ответа от сервера..."));
-
-    ctx.session.messages.push({
-      role: openai.roles.USER,
-      content: ctx.message.text,
-    });
 
     const response = await openai.chat(ctx.session.messages);
 
