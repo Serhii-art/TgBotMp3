@@ -12,19 +12,6 @@ const bot = new Telegraf(config.get('TELEGRAMM_TOKEN'))
 
 bot.use(session())
 
-// Define processVoiceMessage function here
-async function processVoiceMessage (ctx) {
-  // Your logic for processing voice messages
-  // Example logic (replace this with your actual implementation)
-  const voiceMessage = ctx.message.voice
-  if (voiceMessage) {
-    const voiceInput = voiceMessage.caption || 'Default voice input'
-    return voiceInput
-  } else {
-    throw new Error('No voice message found in the context.')
-  }
-}
-
 bot.command('new', async (ctx) => {
   ctx.session = INITIAL_SESSION
   await ctx.reply(
