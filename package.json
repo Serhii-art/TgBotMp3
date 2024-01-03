@@ -13,7 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "standard": "^17.1.0"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
@@ -21,6 +22,7 @@
     "config": "^3.3.9",
     "fluent-ffmpeg": "^2.1.2",
     "openai": "^4.15.3",
+    "play-sound": "^1.1.6",
     "telegraf": "^4.15.3"
   }
 }
