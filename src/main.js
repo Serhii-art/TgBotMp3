@@ -43,7 +43,7 @@ bot.command('dalle', async (ctx) => {
   }
 })
 
-// Обработка команды /generatecode
+/* // Обработка команды /generatecode
 bot.command('code', (ctx) => {
   ctx.reply('Введите данные для генерации кода:')
 
@@ -60,7 +60,7 @@ bot.command('code', (ctx) => {
       const result = generatedFunction()
 
       // Отправка результата в виде блока кода с использованием HTML
-      await ctx.reply(code(`${result}`))
+      // await ctx.reply(`${result}`)
 
       // Удаление обработчика текстовых сообщений после первого использования
       bot.off('text', textHandler)
@@ -73,7 +73,7 @@ bot.command('code', (ctx) => {
   // Добавление обработчика текстовых сообщений
   bot.on('text', textHandler)
 })
-
+*/
 // Text message handler for DALL-E prompt processing
 bot.on('text', async (ctx) => {
   ctx.session = ctx.session || INITIAL_SESSION

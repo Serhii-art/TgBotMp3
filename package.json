@@ -2,7 +2,7 @@
   "name": "gpt3_telegramm_bot_mp3",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "./src/main.js",
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/main.js",

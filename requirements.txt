@@ -1,0 +1,7 @@
+"@ffmpeg-installer/ffmpeg"
+    "axios"
+    "config"
+    "fluent-ffmpeg"
+    "openai"
+    "play-sound"
+ "telegraf"
