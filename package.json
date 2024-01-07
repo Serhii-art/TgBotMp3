@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/main.js",
+  "engines": {
+    "node": "18.18.0"
+    },
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/main.js",
