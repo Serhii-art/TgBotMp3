@@ -9,7 +9,8 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/main.js",
-    "start": "cross-env NODE_ENV=production node ./src/main.js"
+    "start": "cross-env NODE_ENV=production node ./src/main.js",
+    "postinstall": "npm rebuild"
   },
   "keywords": [],
   "author": "",
