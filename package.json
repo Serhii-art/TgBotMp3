@@ -5,7 +5,7 @@
   "main": "./src/main.js",
   "engines": {
     "node": "18.18.0"
-    },
+  },
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/main.js",
@@ -25,6 +25,7 @@
     "axios": "^1.6.2",
     "config": "^3.3.9",
     "fluent-ffmpeg": "^2.1.2",
+    "npm": "^10.3.0",
     "openai": "^4.15.3",
     "play-sound": "^1.1.6",
     "telegraf": "^4.15.3"
