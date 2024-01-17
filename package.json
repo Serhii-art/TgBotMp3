@@ -20,13 +20,14 @@
     "standard": "^17.1.0"
   },
   "dependencies": {
-    "@ffmpeg-installer/ffmpeg": "^1.1.0",
-    "axios": "^1.6.2",
-    "config": "^3.3.9",
-    "fluent-ffmpeg": "^2.1.2",
-    "npm": "^10.3.0",
-    "openai": "^4.15.3",
-    "play-sound": "^1.1.6",
-    "telegraf": "^4.15.3"
-  }
+    "@ffmpeg-installer/ffmpeg": "1.1.0",
+    "axios": "1.6.2",
+    "config": "3.3.9",
+    "fluent-ffmpeg": "2.1.2",
+    "npm": "10.3.0",
+    "openai": "4.15.3",
+    "play-sound": "1.1.6",
+    "telegraf": "4.15.3",
+    "cross-env": "^7.0.3"
+  }  
 }
