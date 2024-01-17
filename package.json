@@ -9,8 +9,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/main.js",
-    "start": "cross-env NODE_ENV=production node --max-old-space-size=512 ./src/main.js",
-    "postinstall": "npm rebuild"
+    "start": "cross-env NODE_ENV=production node --max-old-space-size=512 ./src/main.js"
   },
   "keywords": [],
   "author": "",
