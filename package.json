@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cross-env": "^7.0.3",
+    
     "nodemon": "^3.0.1",
     "standard": "^17.1.0"
   },
@@ -23,6 +23,7 @@
     "@ffmpeg-installer/ffmpeg": "1.1.0",
     "axios": "1.6.2",
     "config": "3.3.9",
+    "cross-env": "^7.0.3",
     "fluent-ffmpeg": "2.1.2",
     "npm": "10.3.0",
     "openai": "4.15.3",
