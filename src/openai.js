@@ -11,7 +11,7 @@ class OpenIA {
 
   constructor (apiKey) {
     this.openai = new OpenAI({
-      key: apiKey // Use the passed API key
+      apiKey // Use the passed API key
     })
   }
 
